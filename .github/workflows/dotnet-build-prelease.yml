@@ -14,7 +14,7 @@ jobs:
     
     env:
       CONFIG: 'Release'
-      SOLUTION_FILE: './UmbNav.sln'
+      SOLUTION_FILE: './Umbraco.Community.Forms.uCaptcha.sln'
       OUT_FOLDER: './build.out/'
 
     steps:
@@ -39,13 +39,13 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-          cache-dependency-path: ./Umbraco.Community.UmbNav/package-lock.json
+          cache-dependency-path: ./Umbraco.Community.Forms.uCaptcha/package-lock.json
           
       - run: npm ci
-        working-directory: ./Umbraco.Community.UmbNav/
+        working-directory: ./Umbraco.Community.Forms.uCaptcha/
 
       - run: npm run build
-        working-directory: ./Umbraco.Community.UmbNav/
+        working-directory: ./Umbraco.Community.Forms.uCaptcha/
 
       - name: Retrieve cache
         uses: actions/cache@v3
@@ -71,43 +71,35 @@ jobs:
       - name: Update umbraco-package.json version
         uses: jossef/action-set-json-field@v2.2
         with:
-          file:  Umbraco.Community.UmbNav/wwwroot/App_Plugins/UmbNav/umbraco-package.json
+          file:  Umbraco.Community.Forms.uCaptcha/wwwroot/App_Plugins/UmbracoCommunityFormsuCaptcha/umbraco-package.json
           field: version
           value: ${{ steps.gitversion.outputs.nuGetVersionV2 }}
 
       - name: Update package.json version
         uses: jossef/action-set-json-field@v2.2
         with:
-          file:  Umbraco.Community.UmbNav/package.json
+          file:  Umbraco.Community.Forms.uCaptcha/package.json
           field: version
           value: ${{ steps.gitversion.outputs.semVer }}
       
       # ------------------------
       # actual builds / packages 
       # ------------------------
-      - name: Restore Umbraco.Community.UmbNav
-        run: dotnet restore ./Umbraco.Community.UmbNav/Umbraco.Community.UmbNav.csproj
+      - name: Restore Umbraco.Community.Forms.uCaptcha
+        run: dotnet restore ./Umbraco.Community.Forms.uCaptcha/Umbraco.Community.Forms.uCaptcha.csproj
 
-      - name: Restore Umbraco.Community.UmbNav.Core
-        run: dotnet restore ./Umbraco.Community.UmbNav.Core/Umbraco.Community.UmbNav.Core.csproj
-
-      - name: Build Umbraco.Community.UmbNav
-        run: dotnet pack ./Umbraco.Community.UmbNav/Umbraco.Community.UmbNav.csproj --no-restore -c ${{env.CONFIG}} --output ${{env.OUT_FOLDER}} /p:version=${{steps.gitversion.outputs.nuGetVersionV2}}
-
-      - name: Build Umbraco.Community.UmbNav.Core
-        run: dotnet pack ./Umbraco.Community.UmbNav.Core/Umbraco.Community.UmbNav.Core.csproj --no-restore -c ${{env.CONFIG}} --output ${{env.OUT_FOLDER}} /p:version=${{steps.gitversion.outputs.nuGetVersionV2}}
+      - name: Build Umbraco.Community.Forms.uCaptcha
+        run: dotnet pack ./Umbraco.Community.Forms.uCaptcha/Umbraco.Community.Forms.uCaptcha.csproj --no-restore -c ${{env.CONFIG}} --output ${{env.OUT_FOLDER}} /p:version=${{steps.gitversion.outputs.nuGetVersionV2}}
 
       - name: Push to GitHub Nuget Repo
         if: ${{ github.event_name != 'pull_request' }}
         run: |
-          dotnet nuget push ./build.out/Umbraco.Community.UmbNav.${{steps.gitversion.outputs.nuGetVersionV2}}.nupkg --skip-duplicate --source https://nuget.pkg.github.com/AaronSadlerUK/index.json --api-key ${{ secrets.GH_PAT }}
-          dotnet nuget push ./build.out/Umbraco.Community.UmbNav.Core.${{steps.gitversion.outputs.nuGetVersionV2}}.nupkg --skip-duplicate --source https://nuget.pkg.github.com/AaronSadlerUK/index.json --api-key ${{ secrets.GH_PAT }}
+          dotnet nuget push ./build.out/Umbraco.Community.Forms.uCaptcha.${{steps.gitversion.outputs.nuGetVersionV2}}.nupkg --skip-duplicate --source https://nuget.pkg.github.com/AaronSadlerUK/index.json --api-key ${{ secrets.GH_PAT }}
 
       - name: Push to Nuget Repo
         if: ${{ github.event_name != 'pull_request' }}
         run: |
-          dotnet nuget push ./build.out/Umbraco.Community.UmbNav.${{steps.gitversion.outputs.nuGetVersionV2}}.nupkg --skip-duplicate --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
-          dotnet nuget push ./build.out/Umbraco.Community.UmbNav.Core.${{steps.gitversion.outputs.nuGetVersionV2}}.nupkg --skip-duplicate --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+          dotnet nuget push ./build.out/Umbraco.Community.Forms.uCaptcha.${{steps.gitversion.outputs.nuGetVersionV2}}.nupkg --skip-duplicate --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
 
       - name: Create Release
         uses: "softprops/action-gh-release@v2"
@@ -117,5 +109,4 @@ jobs:
           prerelease: true
           generate_release_notes: true
           files: |
-            ./build.out/Umbraco.Community.UmbNav.${{steps.gitversion.outputs.nuGetVersionV2}}.nupkg
-            ./build.out/Umbraco.Community.UmbNav.Core.${{steps.gitversion.outputs.nuGetVersionV2}}.nupkg
+            ./build.out/Umbraco.Community.Forms.uCaptcha.${{steps.gitversion.outputs.nuGetVersionV2}}.nupkg
