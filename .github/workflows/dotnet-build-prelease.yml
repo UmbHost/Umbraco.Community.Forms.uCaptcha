@@ -42,10 +42,10 @@ jobs:
           cache-dependency-path: ./Umbraco.Community.Forms.uCaptcha/Client/package-lock.json
           
       - run: npm ci
-        working-directory: ./Umbraco.Community.Forms.uCaptcha/
+        working-directory: ./Umbraco.Community.Forms.uCaptcha/Client/
 
       - run: npm run build
-        working-directory: ./Umbraco.Community.Forms.uCaptcha/
+        working-directory: ./Umbraco.Community.Forms.uCaptcha/Client/
 
       - name: Retrieve cache
         uses: actions/cache@v3
