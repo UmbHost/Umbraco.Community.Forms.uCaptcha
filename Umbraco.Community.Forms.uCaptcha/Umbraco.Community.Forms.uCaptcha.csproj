@@ -1,16 +1,33 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
+	  <AddRazorSupportForMvc>True</AddRazorSupportForMvc>
+	  <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <PackageId>Umbraco.Community.Forms.uCaptcha</PackageId>
-    <Product>Umbraco.Community.Forms.uCaptcha</Product>
-    <Title>Umbraco.Community.Forms.uCaptcha</Title>
-  </PropertyGroup>
+	<PropertyGroup>
+		<PackageId>Umbraco.Community.Forms.uCaptcha</PackageId>
+		<Product>Umbraco.Community.Forms.uCaptcha</Product>
+		<Title>Umbraco.Community.Forms.uCaptcha</Title>
+		<RootNamespace>Umbraco.Community.Forms.uCaptcha</RootNamespace>
+		<Description>A simple to use and integrate captcha plugin for Umbraco Forms which supports hCaptcha, reCaptcha and Cloudflare Turnstile for Umbraco V15+</Description>
+		<PackageTags>umbraco;umbraco-cms;hCaptcha;umbraco-forms;reCaptcha;turnstile;cloudflare-turnstile;umbraco-marketplace;</PackageTags>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+		<Authors>Aaron Sadler</Authors>
+		<Copyright>© $([System.DateTime]::Now.ToString(`yyyy`)) Aaron Sadler</Copyright>
+		<PackageProjectUrl>https://github.com/UmbHost/Umbraco.Community.Forms.uCaptcha</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/UmbHost/Umbraco.Community.Forms.uCaptcha</RepositoryUrl>
+		<PackageIcon>uCaptcha-logo.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryType>git</RepositoryType>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<AssemblyVersion>6.0.0.0</AssemblyVersion>
+		<FileVersion>6.0.0.0</FileVersion>
+		<VersionPrefix>6.0.0</VersionPrefix>
+	</PropertyGroup>
 
 
   <ItemGroup>
@@ -18,14 +35,35 @@
     <PackageReference Include="Umbraco.Cms.Web.Common" Version="*" />
     <PackageReference Include="Umbraco.Cms.Api.Common" Version="*" />
     <PackageReference Include="Umbraco.Cms.Api.Management" Version="*" />
+    <PackageReference Include="Umbraco.Forms.Core" Version="15.1.1" />
+    <PackageReference Include="Umbraco.Forms.Web" Version="15.1.1" />
   </ItemGroup>
   
   <ItemGroup>
     <!-- Dont include the client folder as part of packaging nuget build -->
     <Content Remove="Client\**" />
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\uCaptcha-logo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
 
     <!-- However make the Umbraco-package.json included for dotnet pack or nuget package and visible to the solution -->
     <None Include="Client\public\umbraco-package.json" Pack="false" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Enums\" />
+    <Folder Include="Views\Partials\Forms\Themes\default\FieldTypes\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Update="Views\Partials\Forms\Themes\default\FieldTypes\FieldType.uCaptcha.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   
 </Project>

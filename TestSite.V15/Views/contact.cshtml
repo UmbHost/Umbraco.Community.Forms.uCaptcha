@@ -19,7 +19,8 @@
                 <h2>@Model.ContactFormHeader</h2>
                 @Model.ContactIntro
                 @{
-                   await Html.RenderPartialAsync("Partials/ContactForm", new ContactFormViewModel());
+                    @await Component.InvokeAsync("RenderForm", new { formId = @Model.Form,
+                        includeScripts = false })
                 }
             </div>
 

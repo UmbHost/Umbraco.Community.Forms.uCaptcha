@@ -1,5 +1,7 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
 @using Umbraco.Extensions
+@using Umbraco.Forms.Web
+@using Umbraco.Forms.Web.Extensions
 
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @{
@@ -80,7 +82,9 @@
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
     <script src="@Url.Content("~/scripts/umbraco-starterkit-app.js")"></script>
-
-</body>
+    
+    @Html.RenderUmbracoFormDependencies(Url)
+    <umb-forms-render-scripts theme="default" />
+    </body>
 
 </html>
