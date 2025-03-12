@@ -1,0 +1,14 @@
+{
+  "id": "Umbraco.Community.Forms.uCaptcha",
+  "name": "Umbraco.Community.Forms.uCaptcha",
+  "version": "0.0.0",
+  "allowPackageTelemetry": true,
+  "extensions": [
+    {
+      "name": "Umbraco Community Formsu Captcha Bundle",
+      "alias": "Umbraco.Community.Forms.uCaptcha.Bundle",
+      "type": "bundle",
+      "js": "/App_Plugins/UmbracoCommunityFormsuCaptcha/umbraco-community-forms-u-captcha.js"
+    }
+  ]
+}
