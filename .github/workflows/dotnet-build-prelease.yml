@@ -39,7 +39,7 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-          cache-dependency-path: ./Umbraco.Community.Forms.uCaptcha/package-lock.json
+          cache-dependency-path: ./Umbraco.Community.Forms.uCaptcha/Client/package-lock.json
           
       - run: npm ci
         working-directory: ./Umbraco.Community.Forms.uCaptcha/
