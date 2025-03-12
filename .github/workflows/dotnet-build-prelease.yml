@@ -35,6 +35,17 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Determine Version with GitVersion (MSBuild in Proj will do this)
+        id:   gitversion
+        uses: gittools/actions/gitversion/execute@v0.9.15
+        with:
+          useConfigFile: true
+          configFilePath: ./GitVersion.yml
+
+      - name: Display GitVersion SemVer
+        run: |
+          echo "FullSemVer: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -62,17 +73,6 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget-umbcheckout
-
-      - name: Determine Version with GitVersion (MSBuild in Proj will do this)
-        id:   gitversion
-        uses: gittools/actions/gitversion/execute@v0.9.15
-        with:
-          useConfigFile: true
-          configFilePath: ./GitVersion.yml
-
-      - name: Display GitVersion SemVer
-        run: |
-          echo "FullSemVer: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
 
 
       - name: Update umbraco-package.json version
