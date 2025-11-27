@@ -1,10 +1,9 @@
-name: Package up Prerelease.
+name: Package up Production Release.
 
 on:
   push:
     branches:
-      - develop
-      - rc
+      - main
   workflow_dispatch:
 
 jobs:
@@ -31,6 +30,11 @@ jobs:
         with:
           versionSpec: '5.x'
 
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - name: Retrieve cache
         uses: actions/cache@v3
         with:
@@ -50,7 +54,7 @@ jobs:
       - name: Display GitVersion SemVer
         run: |
           echo "FullSemVer: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
-          
+      
       # ------------------------
       # actual builds / packages 
       # ------------------------
@@ -75,7 +79,7 @@ jobs:
         with:
           name: ${{steps.gitversion.outputs.fullSemVer}}
           tag_name: ${{steps.gitversion.outputs.fullSemVer}}
-          prerelease: true
+          prerelease: false
           generate_release_notes: true
           files: |
             ./build.out/Umbraco.Community.Forms.uCaptcha.${{steps.gitversion.outputs.nuGetVersionV2}}.nupkg
