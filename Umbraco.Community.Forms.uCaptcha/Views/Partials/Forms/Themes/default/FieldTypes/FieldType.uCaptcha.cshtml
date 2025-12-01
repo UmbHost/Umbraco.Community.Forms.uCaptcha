@@ -5,15 +5,15 @@
 @inject IOptions<uCaptchaSettings> Config;
 @{
     var providerClass = string.Empty;
-    if (Config.Value.Provider.Equals(Provider.Name.hCaptcha.ToString(), StringComparison.InvariantCultureIgnoreCase))
+    if (Config.Value.Provider.Equals(nameof(Provider.Name.hCaptcha), StringComparison.InvariantCultureIgnoreCase))
     {
         providerClass = "h-captcha";
     }
-    else if (Config.Value.Provider.Equals(Provider.Name.reCaptcha.ToString(), StringComparison.InvariantCultureIgnoreCase))
+    else if (Config.Value.Provider.Equals(nameof(Provider.Name.reCaptcha), StringComparison.InvariantCultureIgnoreCase))
     {
         providerClass = "g-recaptcha";
     }
-    else if (Config.Value.Provider.Equals(Provider.Name.Turnstile.ToString(), StringComparison.InvariantCultureIgnoreCase))
+    else if (Config.Value.Provider.Equals(nameof(Provider.Name.Turnstile), StringComparison.InvariantCultureIgnoreCase))
     {
         providerClass = "g-recaptcha";
     }
